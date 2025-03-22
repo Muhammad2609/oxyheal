@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<header class="navbar">
+    <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+    <nav class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+
+        <div class="dropdown">
+            <button class="dropbtn" id="profileDropdownButton">Profile</button>
+            <div class="dropdown-content">
+                <a href="login.html" id="loginLogoutButton">Login</a>
+                <a href="deleteAccount.html">Delete Account</a>
+                <a href="cancelAppointment.html">Cancel Appointment</a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<body>
+
+    <div id="popupBox" class="popup-box" style="display:none;">
+        <div class="popup-content">
+            <p>Account deleted successfully</p>
+            <button id="closePopup" class="btn">OK</button>
+        </div>
+    </div>
+
+    <div class="center-container">
+        <div class="container1">
+            <div class="molecule">
+                <span><div class="molecule-text">O2</div></span>
+            </div>
+            <div class="molecule">
+                <span><div class="molecule-text">O2</div></span>
+            </div>
+        </div>
+        <div class="container7">
+            <div class="molecule">
+                <span><div class="molecule-text">O2</div></span>
+            </div>
+            <div class="molecule">
+                <span><div class="molecule-text">O2</div></span>
+            </div>
+        </div>
+        <div class="login">
+            <h2>Delete Account</h2>
+            <form id="deleteAccountForm">
+                <div class="inputbox">
+                    <input type="email" id="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="inputbox">
+                    <input type="password" id="password" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit" class="btn">Delete Account</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="social-icons">
+            <a href="https://www.instagram.com/oxyheal/?hl=en" target="_blank"><img src="instagram_logo.png" alt="Instagram"></a>
+            <a href="https://www.facebook.com/oxyheal1/" target="_blank"><img src="facebook_logo.png" alt="Facebook"></a>
+            <a href="https://www.linkedin.com/company/oxyheal-ltd/about/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn"></a>
+        </div>
+        <p>&copy; 2023 Oxyheal. All rights reserved.</p>
+    </footer>
+<!-- event listener for delete submit -->
+    <script>
+        document.getElementById("deleteAccountForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            deleteAccount(email, password);
+        });
+// use delete api from backend using fetch
+        function deleteAccount(email, password) {
+            fetch('https://18.132.13.38:3001/newuserdelete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("popupBox").style.display = 'block';
+                } else {
+                    alert("Error during account deletion: " + data.error);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        document.getElementById("closePopup").addEventListener("click", function () {
+            document.getElementById("deleteAccountForm").reset();
+            document.getElementById("popupBox").style.display = 'none';
+            window.location.href = 'index.html';
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cancel Appointment</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+        <nav class="nav-bar">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="booking.html">Booking</a>
+            <a href="contact.html">Contact</a>
+            
+            <div class="dropdown">
+                <button class="dropbtn" id="profileDropdownButton">Profile</button>
+                <div class="dropdown-content">
+                    <a href="login.html" id="loginLogoutButton">Login</a>
+                    <a href="deleteAccount.html">Delete Account</a>
+                    <a href="cancelAppointment.html">Cancel Appointment</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+<div class="cancel-appointment-container">
+  <h2>Cancel Appointment</h2>
+<div>
+    <!-- form input fields -->
+  <form id="cancelAppointmentForm">
+    <label for="user_email">Email:</label>
+    <input type="text" id="user_email" name="user_email" required>
+  </div>
+  <div>
+    <label for="therapy_type">Therapy Type:</label>
+    <select id="therapy_type" name="therapy_type" required>
+      <option value="Hyperbaric">Hyperbaric</option>
+      <option value="Normobaric">Normobaric</option>
+    </select>
+</div>
+<div>
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required>
+</div>
+<div>
+    <label for="time">Time:</label>
+    <select id="time" name="time" required></select>
+</div>
+<div>
+    <button type="submit" class="cancelbtn">Cancel Appointment</button>
+  </form>
+</div>
+</div>
+
+    <script>
+        document.getElementById('cancelAppointmentForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const user_email = document.getElementById('user_email').value;
+            const therapy_type = document.getElementById('therapy_type').value;
+            
+const dateInput = document.getElementById('date').value;
+const timeInput = document.getElementById('time').value;
+
+
+const date = new Date(dateInput).toISOString().split('T')[0];
+
+// sends time to database in the format it can store it in
+const time = new Date(`1970-01-01T${timeInput}`).toLocaleTimeString('en-US', { hour12: false });
+
+            // Send a request to the server to check and delete the appointment
+            fetch('https://18.132.13.38:3001/deleteappointment', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_email,
+                    therapy_type,
+                    date,
+                    time,
+                }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to cancel appointment');
+                }
+                return response.text();
+            })
+            .then(data => {
+                if (confirm('Are you sure you want to cancel your appointment?')) {
+                    // takes them back to booking for a new appointment
+                    window.location.href = 'booking.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Details do not match with any appointment. Please check and try again.');
+            });
+        });
+
+        // change the time slot options based on the selected therapy type
+        document.addEventListener('DOMContentLoaded', function() {
+    const therapyTypeElement = document.getElementById('therapy_type');
+    const timeElement = document.getElementById('time');
+
+    therapyTypeElement.addEventListener('change', function() {
+        updateTimeOptions(this.value);
+    });
+
+    function updateTimeOptions(therapyType) {
+        timeElement.innerHTML = '';
+         if (therapyType === 'Normobaric') {
+            addTimeOption('09:00', '9:00 AM');
+            addTimeOption('10:00', '10:00 AM');
+            addTimeOption('11:00', '11:00 AM');
+            addTimeOption('12:00', '12:00 PM');
+            addTimeOption('13:00', '13:00 PM');
+            addTimeOption('14:00', '14:00 PM');
+            addTimeOption('15:00', '15:00 PM');
+            addTimeOption('16:00', '16:00 PM');
+            addTimeOption('17:00', '17:00 PM');
+        } else if (therapyType === 'Hyperbaric') {
+            addTimeOption('09:00', '9:00 AM');
+            addTimeOption('10:30', '10:30 AM');
+            addTimeOption('12:00', '12:00 PM');
+            addTimeOption('13:30', '13:30 PM');
+            addTimeOption('15:00', '15:00 PM');
+            addTimeOption('16:30', '16:30 PM');
+        }
+    }
+
+    function addTimeOption(value, text) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.text = text;
+        timeElement.appendChild(option);
+    }
+
+
+    updateTimeOptions(therapyTypeElement.value);
+});
+
+    </script>
+
+<footer class="footer">
+    <div class="social-icons">
+        <a href="https://www.instagram.com/oxyheal/?hl=en" target="_blank"><img src="instagram_logo.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/oxyheal1/" target="_blank"><img src="facebook_logo.png" alt="Facebook"></a>
+        <a href="https://www.linkedin.com/company/oxyheal-ltd/about/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn"></a>
+    </div>
+    <p>&copy; 2023 Oxyheal. All rights reserved.</p>
+</footer>
+
+
+</body>
+</html>

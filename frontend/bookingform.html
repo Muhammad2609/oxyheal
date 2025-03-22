@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Form</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=AXnzzFt31zcc6mGsuVWPt253XZy3lOyNYvz6sXTOh7zCZvUaR0Gl_wKhegrbbRvUEG04ehHpGrk38wZ5"></script>
+
+    <style>
+        .navbar2 {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<header class="navbar2">
+    <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+    <nav class="nav-bar">
+</header>
+
+<body>
+    <div id="progressBarContainer"></div>
+    <div class="container11">
+        <h2>Booking Form</h2>
+        <form class="booking-form" id="bookingForm">
+
+            <!-- Personal details section -->
+            <div class="form-section" id="personalDetails">
+                <h3 class="section-title">Personal Details</h3>
+                <div>
+                    <label for="title">Title:</label>
+                    <select id="title" name="title" required>
+                        <option value="mr">Mr</option>
+                        <option value="mrs">Mrs</option>
+                        <option value="ms">Ms</option>
+                        <option value="miss">Miss</option>
+                        <option value="mx">Mx</option>
+                        <option value="dr">Dr</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required pattern="[A-Za-z]+">
+                </div>
+                <div>
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required pattern="[A-Za-z]+">
+                </div>
+                <div>
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age" min=1 max=100 required>
+                </div>
+            </div>
+
+            <!-- Contact details section -->
+            <div class="form-section" id="contactDetails">
+                <h3 class="section-title">Contact Details</h3>
+                <div>
+                    <label for="userEmail">Email Address:</label>
+                    <input type="email" id="userEmail" name="userEmail" required>
+                </div>
+                <div>
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" required pattern="[0-9+]+"
+                        title="Only numbers and the + sign are allowed">
+                </div>
+            </div>
+
+           <!-- Therapy Details section -->
+<div class="form-section">
+    <h3 class="section-title">Therapy Details</h3>
+    <div>
+        <label for="therapyType">Therapy Type:</label>
+        <input type="text" id="therapyType" name="therapyType" readonly>
+    </div>
+    <div>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+    </div>
+    <div>
+        <label for="time">Time:</label>
+        <select id="time" name="time" required>
+        </select>
+    </div>
+    <div>
+        <label for="sessionLength">Session Length (in minutes):</label>
+        <input type="text" id="sessionLength" name="sessionLength" readonly>
+    </div>
+</div>
+
+<script>
+    // function to store therapy type choice
+    function selectTherapyTypeAndRedirect(therapyType) {
+        // Store therapy type in local storage
+        localStorage.setItem('therapyType', therapyType);
+        // set the therapy type in the input field
+        document.getElementById('therapyType').value = therapyType;
+    }
+
+    // event listener for therapy type change
+    document.addEventListener('DOMContentLoaded', function () {
+    const therapyTypeField = document.getElementById('therapyType');
+    const sessionLengthField = document.getElementById('sessionLength');
+    const timeOptions = document.getElementById('time');
+
+    therapyTypeField.addEventListener('change', function () {
+        const selectedTherapyType = this.value;
+        timeOptions.innerHTML = ''; 
+
+        if (selectedTherapyType === 'Normobaric') {
+            addTimeOption('09:00', '9:00 AM');
+            addTimeOption('10:00', '10:00 AM');
+            addTimeOption('11:00', '11:00 AM');
+            addTimeOption('12:00', '12:00 PM');
+            addTimeOption('13:00', '13:00 PM');
+            addTimeOption('14:00', '14:00 PM');
+            addTimeOption('15:00', '15:00 PM');
+            addTimeOption('16:00', '16:00 PM');
+            addTimeOption('17:00', '17:00 PM');
+            sessionLengthField.value = '60'; 
+        } else if (selectedTherapyType === 'Hyperbaric') {
+            addTimeOption('09:00', '9:00 AM');
+            addTimeOption('10:30', '10:30 AM');
+            addTimeOption('12:00', '12:00 PM');
+            addTimeOption('13:30', '13:30 PM');
+            addTimeOption('15:00', '15:00 PM');
+            addTimeOption('16:30', '16:30 PM');
+            sessionLengthField.value = '90'; 
+        }
+    });
+
+    // function to add time options
+    function addTimeOption(value, text) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.text = text;
+        timeOptions.add(option);
+    }
+
+    // initialise therapy type and trigger event change
+    const storedTherapyType = localStorage.getItem('therapyType');
+    if (storedTherapyType) {
+        therapyTypeField.value = storedTherapyType;
+        therapyTypeField.dispatchEvent(new Event('change'));
+    }
+});
+
+</script>
+
+            <!-- Additional Information section -->
+            <div class="form-section">
+                <h3 class="section-title">Additional Information</h3>
+                <div>
+                    <label for="special_requirements">Special Requirements:</label>
+                    <textarea id="special_requirements" name="special_requirements" required></textarea>
+                </div>
+                <div>
+                    <label for="reason">Reason:</label>
+                    <textarea id="reason" name="reason" required></textarea>
+                </div>
+            </div>
+
+<!-- proceed to checkout button -->
+<button type="button" id="checkoutButton">Proceed to Checkout</button>
+
+
+<script>
+    // function to check if all fields are filled
+    function areAllFieldsFilled() {
+        const mandatoryFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+        return Array.from(mandatoryFields).every(field => field.value.trim());
+    }
+    // function to store form data in localStorage
+    function storeFormData() {
+    const formData = {
+        title: document.getElementById('title').value,
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        age: document.getElementById('age').value,
+        therapy_type: document.getElementById('therapyType').value,
+        date: document.getElementById('date').value,
+        time: document.getElementById('time').value,
+        user_email: document.getElementById('userEmail').value,
+        phone: document.getElementById('phone').value,
+        special_requirements: document.getElementById('special_requirements').value,
+        reason: document.getElementById('reason').value,
+        session_length: document.getElementById('sessionLength').value,
+        paymentOption: getSelectedPaymentOption(),
+    };
+    console.log(document.getElementById('userEmail').value);
+    // store form data in localStorage
+    localStorage.setItem('formData', JSON.stringify(formData));
+    console.log('Stored formData:', formData);
+}
+function checkFieldsValidity() {
+    const mandatoryFields = document.querySelectorAll('input[required], select[required], textarea[required]');
+    let allFieldsValid = true;
+    let invalidFieldNames = [];
+
+    mandatoryFields.forEach(field => {
+        if (!field.checkValidity()) {
+            field.classList.add('required-error'); 
+            allFieldsValid = false;
+            invalidFieldNames.push(getFieldName(field)); 
+        } else {
+            field.classList.remove('required-error'); 
+        }
+    });
+
+    if (!allFieldsValid) {
+        alert('Please fill in all mandatory fields correctly. Check the following: ' + invalidFieldNames.join(', ') + '.');
+    }
+    return allFieldsValid;
+}
+function getFieldName(field) {
+    if (field.id) {
+        const label = document.querySelector(`label[for="${field.id}"]`);
+        return label ? label.innerText : field.id;
+    }
+    return field.name || 'Unnamed field';
+}
+
+
+document.getElementById('checkoutButton').addEventListener('click', function () {
+    if (!checkFieldsValidity()) {
+    } else {
+            storeFormData();
+            
+            console.log('Form data stored in localStorage:', localStorage.getItem('formData'));
+
+            window.location.href = 'checkout.html';
+        }
+    });
+
+
+    
+
+ // function to get the selected payment option
+ function getSelectedPaymentOption() {
+        const paymentOptions = document.getElementsByName('paymentOption');
+        for (const option of paymentOptions) {
+            if (option.checked) {
+                return option.value;
+            }
+        }
+        return null; 
+    }
+</script>
+
+
+
+        </form>
+    </div>
+</body>
+
+<script src="progressBar.js"></script>
+<script src="navigation.js"></script>
+<script src="script.js"></script>
+
+</html>

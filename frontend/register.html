@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Registration</title>
+        <link rel="stylesheet" href="style.css">
+        <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+        <script src="script.js"></script>
+    </head>
+    <header class="navbar">
+        <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+        <nav class="nav-bar">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="booking.html">Booking</a>
+            <a href="contact.html">Contact</a>
+    
+            <div class="dropdown">
+                <button class="dropbtn" id="profileDropdownButton">Profile</button>
+                <div class="dropdown-content">
+                    <a href="login.html" id="loginLogoutButton">Login</a>
+                    <a href="deleteAccount.html">Delete Account</a>
+                    <a href="cancelAppointment.html">Cancel Appointment</a>
+                </div>
+            </div>
+    
+        </nav>
+    </header>
+<body>
+    <div class="center-container">
+        <div class="registration">
+            <h2>Register</h2>
+
+<!-- input fields -->
+            <form id="registrationForm" onsubmit="return handleRegistration();">
+                <div class="inputbox">
+                    <input type="text" id="first_name" name="first_name" required>
+                    <label>First Name</label>
+                </div>
+                <div class="inputbox">
+                    <input type="text" id="last_name" name="last_name" required>
+                    <label>Last Name</label>
+                </div>
+                <div class="inputbox">
+                    <input type="text" id="email" name="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="inputbox">
+                    <input type="number" id="age" name="age" required>
+                    <label>Age</label>
+                </div>
+                <div class="inputbox">
+                    <input type="text" id="phoneNumber" name="phone_number" required>
+                    <label>Phone Number</label>
+                </div>
+                <div class="inputbox">
+                    <input type="password" id="password" name="password" required>
+                    <label>Password</label>
+                </div>
+                <div class="inputbox">
+                    <input type="password" id="confirmPassword" name="confirm_password" required>
+                    <label>Confirm Password</label>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="signuplink">
+                    <a href="login.html">Already have an account? Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="social-icons">
+            <a href="https://www.instagram.com/oxyheal/?hl=en" target="_blank"><img src="instagram_logo.png" alt="Instagram"></a>
+            <a href="https://www.facebook.com/oxyheal1/" target="_blank"><img src="facebook_logo.png" alt="Facebook"></a>
+            <a href="https://www.linkedin.com/company/oxyheal-ltd/about/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn"></a>
+        </div>
+        <p>&copy; 2023 Oxyheal. All rights reserved.</p>
+    </footer>
+</body>
+</html>

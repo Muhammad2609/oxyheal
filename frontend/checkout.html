@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=AXnzzFt31zcc6mGsuVWPt253XZy3lOyNYvz6sXTOh7zCZvUaR0Gl_wKhegrbbRvUEG04ehHpGrk38wZ5"></script>
+
+    <style>
+        .navbar2 {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<header class="navbar2">
+    <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+    <nav class="nav-bar">
+</header>
+
+<body>
+    <div id="progressBarContainer"></div>
+    <div class="checkout-container">
+        <div class="booking-details">
+            <h2>Checkout</h2>
+            <!-- Display all the details in read-only mode -->
+            <div>
+                <label for="readOnlyFirstName">First Name:</label>
+                <input type="text" id="readOnlyFirstName" name="readOnlyFirstName" readonly>
+            </div>
+            <div>
+                <label for="readOnlyLastName">Last Name:</label>
+                <input type="text" id="readOnlyLastName" name="readOnlyLastName" readonly>
+            </div>
+            <div>
+                <label for="readOnlyUserEmail">Email:</label>
+                <input type="text" id="readOnlyUserEmail" name="readOnlyUserEmail" readonly>
+            </div>
+            <div>
+                <label for="readOnlyTherapyType">Therapy Type:</label>
+                <input type="text" id="readOnlyTherapyType" name="readOnlyTherapyType" readonly>
+            </div>
+            <div>
+                <label for="readOnlyDate">Date:</label>
+                <input type="text" id="readOnlyDate" name="readOnlyDate" readonly>
+            </div>
+            <div>
+                <label for="readOnlyTime">Time:</label>
+                <input type="text" id="readOnlyTime" name="readOnlyTime" readonlˆy>
+            </div>
+            <div>
+                <label for="readOnlyLength">Session Length:</label>
+                <input type="text" id="readOnlyLength" name="readOnlyLength" readonly>
+            </div>
+        </div>
+
+        <div class="paypal-container">
+            <div class="form-section">
+                <div>
+                    <label for="couponCode">Coupon Code:</label>
+                    <input type="text" id="couponCode" name="couponCode">
+                </div>
+            </div>
+
+             <!-- Payment option section -->
+<div class="form-section payment-options">
+    <h3 class="section-title">Payment Options</h3>
+
+    <!-- Deposit option -->
+    <div class="payment-radio-options">
+        <label for="deposit" class="radio-label">Deposit:</label>
+        <input type="radio" id="deposit" name="paymentOption" value="deposit" required>
+    </div>
+
+    <!-- Full Amount option -->
+    <div class="payment-radio-options">
+        <label for="fullAmount" class="radio-label">Full Amount:</label>
+        <input type="radio" id="fullAmount" name="paymentOption" value="fullAmount" required>
+    </div>
+
+    <!-- Payment total field -->
+    <input type="text" class="payment-total" readonly>
+</div>
+
+            <h2>Payment</h2>
+            <div id="paypal-button-container"></div>
+
+            <script>
+    let formData;  // Define formData outside of the DOMContentLoaded event listener
+
+    // Retrieve form data from localStorage
+    const storedFormData = localStorage.getItem('formData');
+if (storedFormData) {
+  formData = JSON.parse(storedFormData);
+  console.log(formData);
+document.getElementById('readOnlyUserEmail').value = formData.user_email;
+}else {
+  console.error('No form data found in localStorage');
+}
+// input formdata into read onyl fields
+        document.getElementById('readOnlyFirstName').value = formData.firstName;
+        document.getElementById('readOnlyLastName').value = formData.lastName;
+        document.getElementById('readOnlyUserEmail').value = formData.user_email;
+        document.getElementById('readOnlyTherapyType').value = formData.therapy_type;
+        document.getElementById('readOnlyDate').value = formData.date;
+        document.getElementById('readOnlyTime').value = formData.time;
+        document.getElementById('readOnlyLength').value = formData.session_length;
+    
+    fetch('https://18.132.13.38:3001/newappointment', {
+});
+    function sendFormDataToServer(formData) {
+    fetch('https://18.132.13.38:3001/newappointment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            user_id: formData.user_id,
+            date: formData.date,
+            time: formData.time,
+            user_email: localStorage.getItem('userEmail'),
+            special_requirements: formData.special_requirements || "", 
+            reason: formData.reason || "", 
+            therapy_type: formData.therapyType,
+            session_length: formData.sessionLength,
+            payment_option: localStorage.getItem('paymentOption') || "", 
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Form data submitted successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error submitting form data:', error);
+            console.log(json);
+        });
+}
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // event listener for the deposit radio button
+const depositOption = document.getElementById('deposit');
+depositOption.addEventListener('change', function () {
+    if (this.checked) {
+        document.querySelector('.payment-total').value = 'Deposit Total: £20';
+        // save the selected payment option to local storage
+        localStorage.setItem('paymentOption', 'deposit');
+    }
+});
+
+// event listener for the full amount radio button
+const fullAmountOption = document.getElementById('fullAmount');
+fullAmountOption.addEventListener('change', function () {
+    if (this.checked) {
+        document.querySelector('.payment-total').value = 'Full Amount Total: £68.50';
+        // save the selected payment option to local storage
+        localStorage.setItem('paymentOption', 'fullAmount');
+    }
+});
+
+    // check local storage for a saved payment option
+const savedPaymentOption = localStorage.getItem('paymentOption');
+if (savedPaymentOption) {
+    document.getElementById(savedPaymentOption).checked = true;
+    if (savedPaymentOption === 'deposit') {
+        document.querySelector('.payment-total').value = 'Deposit Total: £20';
+    } else if (savedPaymentOption === 'fullAmount') {
+        document.querySelector('.payment-total').value = 'Full Amount Total: £68.50';
+    }
+}
+
+                });
+    // PayPal button setup
+    paypal.Buttons({
+    createOrder: function (data, actions) {
+        return actions.order.create({
+            purchase_units: [{
+                amount: {
+                    value: getAmountValue(document.querySelector('.payment-total').value),
+                }
+            }]
+        });
+    },
+    onApprove: function (data, actions) {
+        return actions.order.capture().then(function (details) {
+            sendEmailToUser().then(() => {
+                window.location.href = 'thankyou.html';
+            }).catch(error => {
+                console.error('Error sending email:', error);
+            });
+
+            // call to push data to the database
+            pushDataToDatabase().then(() => {
+                window.location.href = 'thankyou.html';
+            }).catch(error => {
+                console.error('Error updating database:', error);
+            });
+        });
+    }
+}).render('#paypal-button-container');
+
+        // function to push local storage data into the database
+        async function pushDataToDatabase() {
+    return new Promise((resolve, reject) => {
+        const storedFormData = localStorage.getItem('formData');
+        if (!storedFormData) {
+            console.error('No form data available in local storage.');
+            reject('No form data available in local storage.');
+            return;
+        }
+
+        const formData = JSON.parse(storedFormData);
+        console.log('Data from local storage:', formData);
+
+        // get only the required parameters for the API
+        const apiData = {
+            date: formData.date,
+            time: formData.time,
+            special_requirements: formData.special_requirements,
+            reason: formData.reason,
+            therapy_type: formData.therapy_type,
+            session_length: formData.session_length,
+            payment_option: localStorage.getItem('paymentOption'),
+            user_email: formData.user_email,
+        };
+
+        
+        // send the data to the server
+        fetch('https://18.132.13.38:3001/newappointment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(apiData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data pushed to the database:', data);
+            resolve(data); 
+        })
+        .catch(error => {
+            console.error('Error pushing data to the database:', error);
+            reject(error); 
+        });
+    });
+}
+    async function sendEmailToUser() {
+    fetch('https://18.132.13.38:3001/send-confirmation-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: 'tahmidalam10122@gmail.com' }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Email sent:', data);
+    })
+    .catch(error => {
+        console.error('Error in sending email:', error);
+    });
+}
+
+    function getAmountValue(paymentTotal) {
+        const numericValue = parseFloat(paymentTotal.replace(/[^\d.]/g, ''));
+        return numericValue.toFixed(2); 
+    }
+    
+                document.addEventListener('DOMContentLoaded', function () {
+                    const depositOption = document.getElementById('deposit');
+                    depositOption.addEventListener('change', function () {
+                        if (this.checked) {
+                            document.querySelector('.payment-total').value = 'Deposit Total: £20';
+                        }
+                    });
+    
+                    const fullAmountOption = document.getElementById('fullAmount');
+                    fullAmountOption.addEventListener('change', function () {
+                        if (this.checked) {
+                            document.querySelector('.payment-total').value = 'Full Amount Total: £68.50';
+                        }
+                    });
+                });
+                
+            </script>
+
+        </div>
+    </div>
+</body>
+
+<script src="progressBar.js"></script>
+<script src="navigation.js"></script>
+<script src="script.js"></script>
+
+</html>

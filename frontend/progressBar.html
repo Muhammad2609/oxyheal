@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Progress</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- call function steps based on option clicked -->
+    <div class="progress-bar">
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-step" onclick="goToStep(1)">Therapy Type</div>
+            <div class="progress-step" onclick="goToStep(2)">Complete Booking</div>
+            <div class="progress-step" onclick="goToStep(3)">Checkout</div>
+        </div>
+    </div>
+
+    <script src="progressBar.js"></script>
+    <script src="script.js"></script>
+    
+</body>
+</html>

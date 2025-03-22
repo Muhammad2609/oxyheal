@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+     <link rel="stylesheet" href="style.css">
+  <meta name="google-signin-client_id" content="797237923543-gjnsrngmrg446kvuhcbq12mre2l9likm.apps.googleusercontent.com">
+</head>
+<header class="navbar">
+    <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+    <nav class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+                
+
+        <div class="dropdown">
+            <button class="dropbtn" id="profileDropdownButton">Profile</button>
+            <div class="dropdown-content">
+                <a href="login.html" id="loginLogoutButton">Login</a>
+                <a href="deleteAccount.html">Delete Account</a>
+                <a href="cancelAppointment.html">Cancel Appointment</a>
+            </div>
+            <img src="" alt="Profile Picture" id="profilePicture" style="display: none; max-width: 40px; margin-left: 30px; margin-top: 50px;">
+        </div>
+    
+    </nav>
+</header>
+<body>
+
+<!-- popup box for authenticated user  -->
+    <div id="popupBox" class="popup-box" style="display:none;">
+        <div class="popup-content">
+            <p>User authenticated successfully</p>
+            <button id="closePopup" class="btn">OK</button>
+        </div>
+    </div>
+    
+
+    <div class="center-container">
+    <div class="container1">
+                    <div class="molecule">
+                        <span><div class="molecule-text">O2</div></span>
+                    </div>
+                    <div class="molecule">
+                        <span><div class="molecule-text">O2</div></span>
+                    </div>
+                </div>
+                <div class="container7">
+                    <div class="molecule">
+                        <span><div class="molecule-text">O2</div></span>
+                    </div>
+                    <div class="molecule">
+                        <span><div class="molecule-text">O2</div></span>
+                    </div>
+                </div>
+                <div class="login">
+                    <h2>Login</h2>
+                    <form id="loginForm">
+                        <div class="inputbox">
+                            <input type="email" id="email" required>
+                            <label>Email</label>
+                        </div>
+                        <div class="inputbox">
+                            <input type="password" id="password" required>
+                            <label>Password</label>
+                        </div>
+                        <div class="forgotpass">
+                            <a href="forgot.html">Forgot your password?</a>
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                    </form>
+                    <div class="signuplink">
+                        <a href="register.html">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+            <!-- google sign in button -->
+  <div id="my-signin2" data-onsuccess="handleCredentialResponse"></div>
+  <div id="g_id_onload"
+         data-client_id="797237923543-gjnsrngmrg446kvuhcbq12mre2l9likm.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
+    <div class="g_id_signin" data-type="standard"></div> 
+  <script>
+
+
+function decodeJwtResponse(credential) {
+    const tokenParts = credential.split('.');
+    const tokenPayload = JSON.parse(atob(tokenParts[1]));
+
+    return {
+        sub: tokenPayload.sub,
+        name: tokenPayload.name,
+        given_name: tokenPayload.given_name,
+        family_name: tokenPayload.family_name,
+        picture: tokenPayload.picture,
+        email: tokenPayload.email,
+    };
+}
+
+
+   function handleCredentialResponse(response) {
+    const responsePayload = decodeJwtResponse(response.credential);
+    console.log(response);
+    console.log(responsePayload);
+
+    // store user information in local storage
+    localStorage.setItem('Id', responsePayload.sub);
+    localStorage.setItem('userEmail', responsePayload.email);
+    localStorage.setItem('imageUrl', responsePayload.picture);
+
+
+    // set profile picture 
+    const profilePicture = document.getElementById('profilePicture');
+    if (profilePicture) {
+        profilePicture.src = responsePayload.picture;
+        profilePicture.style.display = 'inline'; 
+    }
+
+
+     // log the stored values
+     console.log('Stored Email:', localStorage.getItem('userEmail'));
+     console.log('Stored ID:', localStorage.getItem('Id'));
+     console.log('Stored image:', localStorage.getItem('imageUrl'));
+
+     console.log("ID: " + responsePayload.sub);
+     console.log('Full Name: ' + responsePayload.name);
+     console.log('Given Name: ' + responsePayload.given_name);
+     console.log('Family Name: ' + responsePayload.family_name);
+     console.log("Image URL: " + responsePayload.picture);
+     console.log("Email: " + responsePayload.email);
+
+     
+     // changes jwt to json
+     function decodeJwtResponse(credential) {
+    const tokenParts = credential.split('.');
+    const tokenPayload = JSON.parse(atob(tokenParts[1]));
+
+    return {
+      sub: tokenPayload.sub,
+      name: tokenPayload.name,
+      given_name: tokenPayload.given_name,
+      family_name: tokenPayload.family_name,
+      picture: tokenPayload.picture,
+      email: tokenPayload.email,
+    };
+  }
+  }
+
+    function onSuccess(googleUser) {
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    
+  </script>
+  <script>
+    function validatePassword() {
+        var password = document.getElementById("password").value;
+        var confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match. Please try again.");
+            return false;
+        }
+        return true;
+    }
+</script>
+<!-- authenticate user using api -->
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        var email = document.getElementById("email").value;
+        var passwordField = document.getElementById("password");
+
+        fetch('https://18.132.13.38:3001/authenticate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: email, password: passwordField.value })
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data === 'User authenticated successfully') {
+                document.getElementById("popupBox").style.display = 'block'; 
+                passwordField.style.borderColor = "#2c4766";
+            } else {
+                passwordField.style.borderColor = "red"; 
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            passwordField.style.borderColor = "red"; 
+        });
+    });
+
+    document.getElementById("closePopup").addEventListener("click", function() {
+        document.getElementById("loginForm").reset(); 
+        document.getElementById("popupBox").style.display = 'none'; 
+        window.location.href = 'index.html'; 
+    });
+</script>
+<footer class="footer">
+    <div class="social-icons">
+        <a href="https://www.instagram.com/oxyheal/?hl=en" target="_blank"><img src="instagram_logo.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/oxyheal1/" target="_blank"><img src="facebook_logo.png" alt="Facebook"></a>
+        <a href="https://www.linkedin.com/company/oxyheal-ltd/about/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn"></a>
+    </div>
+    <p>&copy; 2023 Oxyheal. All rights reserved.</p>
+</footer>
+
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+</body>
+</html>

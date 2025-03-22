@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .navbar2{
+            position: absolute;
+            margin-left: 650px;
+            margin-top: 5px;
+        }
+    </style>
+    
+</head>
+
+<header class="navbar2">
+    <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+    <nav class="nav-bar">
+
+
+
+</header>
+
+<body>
+
+<div class="payment-container">
+    <div class="card-display">
+        <div class="card-front">
+            <div class="card-images">
+                <img src="chip.png" alt="Chip">
+                <img src="visa.png" alt="Visa">
+            </div>
+            <div class="card-details">
+                <div class="card-number">################</div>
+                <div class="card-info">
+                    <div class="card-holder">FULL NAME</div>
+                    <div class="expiration-date">
+                        <span class="exp-month">MM</span>
+                        <span class="exp-year">YY</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-back">
+            <div class="security-stripe"></div>
+            <div class="cvv-section">
+                <span>CVV</span>
+                <div class="cvv-display"></div> 
+                <img src="visa.png" alt="Visa" class="visa-logo"> 
+            </div>
+        </div>
+    </div>
+<!-- input for card info -->
+    <form class="payment-form">
+        <div class="input-field">
+            <label>Card Number</label>
+            <input type="text" maxlength="16" class="card-number-input">
+        </div>
+        <div class="input-field">
+            <label>Card Holder</label>
+            <input type="text" maxlength="25" class="card-holder-input">
+        </div>
+        <div class="input-field">
+            <label>Expiration MM</label>
+            <select class="month-input">
+                    <option value="month" selected disabled>month</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </select>
+        </div>
+        <div class="input-field">
+            <label>Expiration YY</label>
+            <select class="year-input">
+                <option value="month" selected disabled>year</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2027">2028</option>
+                    <option value="2027">2029</option>
+                    <option value="2027">2030</option>
+            </select>
+        </div>
+        <div class="input-field">
+            <label>CVV</label>
+            <input type="text" maxlength="3" class="cvv-input">
+        </div>
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
+</div>
+<!-- listeners to replace card info with input -->
+<script>
+
+document.querySelector('.card-number-input').addEventListener('input', function() {
+    document.querySelector('.card-number').textContent = this.value;
+});
+
+document.querySelector('.card-holder-input').addEventListener('input', function() {
+    document.querySelector('.card-holder').textContent = this.value;
+});
+document.querySelector('.month-input').addEventListener('input', function() {
+    document.querySelector('.exp-month').textContent = this.value;
+});
+
+document.querySelector('.year-input').addEventListener('input', function() {
+    document.querySelector('.exp-year').textContent = this.value.slice(2); 
+});
+document.querySelector('.cvv-input').addEventListener('input', function() {
+    document.querySelector('.cvv-display').textContent = this.value;
+});
+
+document.querySelector('.cvv-input').addEventListener('mouseenter', function() {
+    document.querySelector('.card-front').style.transform = 'perspective(1000px) rotateY(-180deg)';
+    document.querySelector('.card-back').style.transform = 'perspective(1000px) rotateY(0deg)';
+});
+
+document.querySelector('.cvv-input').addEventListener('mouseleave', function() {
+    document.querySelector('.card-front').style.transform = 'perspective(1000px) rotateY(0deg)';
+    document.querySelector('.card-back').style.transform = 'perspective(1000px) rotateY(180deg)';
+});
+
+
+</script>
+
+</body>
+</html>

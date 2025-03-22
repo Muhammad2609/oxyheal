@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- position only our logo in middle for different navbar for booking pages -->
+    <style>
+    .navbar2 {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 5px;
+    }
+</style>
+    </style>
+</head>
+<body>
+    <header class="navbar2">
+        <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+        <nav class="nav-bar"></nav>
+    </header>
+    <div id="progressBarContainer"></div>
+    <div class="booking-container">
+        <h2>Book An Appointment</h2>
+        <div class="boxes">
+            <div class="box1">
+                <!-- calls function to store choice in local storage -->
+                <a href="#" onclick="selectTherapyTypeAndRedirect('Hyperbaric')">
+                    <img src="hyper.jpg">
+                    <div class="text-background"></div> 
+                    <span class="hover-text">Hyperbaric</span> 
+                </a>
+            </div>
+            <div class="box1">
+                <a href="#" onclick="selectTherapyTypeAndRedirect('Normobaric')">
+                    <img src="norm.jpg">
+                    <div class="text-background"></div> 
+                    <span class="hover-text">Normobaric</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="progressBar.js"></script>
+    <script src="navigation.js"></script>
+    <script src="script.js"></script>
+    <!-- function to store choice in local storage and redirect to booking form -->
+    <script>
+        function selectTherapyTypeAndRedirect(therapyType) {
+            // Store therapy type in local storage
+            localStorage.setItem('therapyType', therapyType);
+
+            // Redirect to bookingform.html
+            window.location.href = 'bookingform.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- read more button style -->
+    <style>
+        #more-text {
+            font-size: 24px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+            color: #fff;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+        <nav class="nav-bar">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="booking.html">Booking</a>
+            <a href="contact.html">Contact</a>
+    
+            <div class="dropdown">
+                <button class="dropbtn" id="profileDropdownButton">Profile</button>
+                <div class="dropdown-content">
+                    <a href="login.html" id="loginLogoutButton">Login</a>
+                    <a href="deleteAccount.html">Delete Account</a>
+                    <a href="cancelAppointment.html">Cancel Appointment</a>
+                </div>
+            </div>
+    
+        </nav>
+    </header>
+    <section class="heor">
+        <div class="heading">
+            <h1>About Oxyheal</h1>
+        </div>
+        <div class="container6">
+            <div class="hero-content">
+                <h2>Lets Dive Into What Oxyheal Is</h2>
+                <p>
+                    Oxygen Therapy delivers 95% pure clean oxygen, boosting energy, fitness, and overall well-being...
+                    <span id="more-text">
+                        <br><br>
+                        Oxyheal offers Oxygen Therapy as a versatile treatment option for various medical conditions such as sports injuries, infections, arthritis, and Chronic Fatigue Syndrome. This therapy can provide relief by reducing inflammation, promoting tissue healing, aiding in infection control, and potentially alleviating symptoms associated with these conditions. Consultation with healthcare professionals is advised to determine its suitability for individual needs.
+                        <br><br>
+                        The conditions addressed through oxygen therapy facilitate the increased dissolution of oxygen into the bloodstream, surpassing typical levels. This elevation in oxygen concentration permeates all bodily tissues, effectively extending oxygen's reach to areas with diminished blood flow, thus promoting a comprehensive and beneficial healing process.
+                    </span>
+                </p>
+                <button class="cta-button" id="toggleButton" onclick="toggleMoreText()">Read More</button>
+            </div>
+            <div class="hero-image">
+                <img src="about.png" alt="About Image">
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="social-icons">
+            <a href="https://www.instagram.com/oxyheal/?hl=en" target="_blank"><img src="instagram_logo.png" alt="Instagram"></a>
+            <a href="https://www.facebook.com/oxyheal1/" target="_blank"><img src="facebook_logo.png" alt="Facebook"></a>
+            <a href="https://www.linkedin.com/company/oxyheal-ltd/about/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn"></a>
+        </div>
+        <p>&copy; 2023 Oxyheal. All rights reserved.</p>
+    </footer>
+<!-- helps toggle the button to allow more text to show after button click -->
+    <script>
+ function toggleMoreText() {
+    var moreText = document.getElementById("more-text");
+    var toggleButton = document.getElementById("toggleButton");
+    if (getComputedStyle(moreText).display === "none") {
+        moreText.style.display = "inline";
+        toggleButton.textContent = "Read Less";
+    } else {
+        moreText.style.display = "none";
+        toggleButton.textContent = "Read More";
+    }
+}
+    </script>
+
+    <script src="script.js"></script>
+    
+</body>
+</html>

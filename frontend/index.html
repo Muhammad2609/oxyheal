@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="banner.js"></script>
+    <meta name="google-signin-client_id" content="797237923543-gjnsrngmrg446kvuhcbq12mre2l9likm.apps.googleusercontent.com">
+    
+</head>
+<body>
+<header class="navbar">
+    <a href="index.html"><img src="oxyheal.png" class="logo" id="navbarLogo"></a>
+    <nav class="nav-bar">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="booking.html">Booking</a>
+        <a href="contact.html">Contact</a>
+
+        <div class="dropdown">
+            <button class="dropbtn" id="profileDropdownButton">Profile</button>
+            <div class="dropdown-content">
+                <a href="login.html" id="loginLogoutButton">Login</a>
+                <a href="deleteAccount.html">Delete Account</a>
+                <a href="cancelAppointment.html">Cancel Appointment</a>
+            </div>
+            <img src="" alt="Profile Picture" id="profilePicture" style="display: none; max-width: 40px; margin-left: 30px; margin-top: 50px;">
+        </div>
+
+    </nav>
+</header>
+
+ <!-- banner slider -->
+ <section class="slider-container">
+    <div class="slider">
+        <div class="slide">
+            <img src="hbot_banner.png" alt="Hyperbaric Oxygen Therapy 1">
+        </div>
+        <div class="slide">
+            <img src="hbot_banner2.jpg" alt="Hyperbaric Oxygen Therapy 2">
+        </div>
+    </div>
+    <button class="arrow left-arrow" onclick="prevSlide()">&#8249;</button>
+    <button class="arrow right-arrow" onclick="nextSlide()">&#8250;</button>
+</section>
+
+<!-- main content section -->
+<div class="container">
+    <div class="text-section">
+        <p>Hyperbaric Oxygen Therapy: Oxyheal Ltd is a London-based hyperbaric chamber specializing in hyperbaric oxygen therapy. We offer a range of hyperbaric oxygen treatments to support your health and wellbeing.</p>
+    </div>
+
+    <div class="text-section">
+        <p>Oxygen Therapy Services: Oxyheal Ltd provides Hyperbaric Oxygen Therapy treatments in London for a range of conditions including sports injuries, to reduce pain, improve cognitive function, and more.</p>
+    </div>
+
+    <div class="text-section">
+        <p>What is Hyperbaric Oxygen Therapy? HBOT involves breathing pure oxygen in a pressurized chamber, allowing your body to absorb higher levels of oxygen than usual. This increased oxygen promotes natural healing processes and can have a profound impact on various health conditions.</p>
+    </div>
+
+    <div class="benefits-section">
+        <h2>Benefits of HBOT:</h2>
+        <ul>
+            <li>Increased oxygen levels in the blood</li>
+            <li>Boosted immune system</li>
+            <li>Promoted tissue repair</li>
+            <li>Reduced inflammation</li>
+            <li>Improved wound healing</li>
+            <li>Reduced pain</li>
+            <li>Improved cognitive function</li>
+            <li>Enhanced sports performance</li>
+        </ul>
+    </div>
+</div>
+
+
+
+<script>
+     // store user information in local storage
+     localStorage.setItem('Id', responsePayload.sub);
+    localStorage.setItem('userEmail', responsePayload.email);
+    localStorage.setItem('imageUrl', responsePayload.picture);
+
+
+    // display profile picture
+    const profilePicture = document.getElementById('profilePicture');
+    if (profilePicture) {
+        profilePicture.src = responsePayload.picture;
+        profilePicture.style.display = 'inline'; 
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+  const userId = localStorage.getItem('Id');
+  const userEmail = localStorage.getItem('userEmail');
+
+  if (userId && userEmail) {
+    document.getElementById('profilePicture').style.display = 'block';
+  }
+});
+
+</script>
+
+<script src="reviews.js"></script>
+
+ <!-- google reviews section -->
+<div class="google-reviews">
+    <h2>What Our Clients Say</h2>
+    <div class="review-slider-container">
+        <div class="review-slider">
+            <div class="review-card">
+                <p class="review-author">Jenneh Diorgu</p>
+                <p class="review-content">Just wanted to say a massive thank you to OxyHeal! I suffer from a chronic skin condition for 10 years, and my skin becomes irritated at least once every week. Ever since I’ve started OxyHeal, I haven’t experienced any issues for the whole month. It’s such a unique and natural method that has helped me more than any medication or ointments. I haven’t felt at peace with my condition in so long until now. It’s really helped me a lot! PS: the staff is so lovely and accommodating, and the sessions are very comfortable and relaxing.</p>
+            </div>
+            <div class="review-card">
+                <p class="review-author">Louise Live As You Dream</p>
+                <p class="review-content">I had 6 HBOT treatments here and will continue to have more. The owner is lovely, very knowledgeable about Oxygen treatments. Easy to book and very good prices, compared to other places in London. I felt instant benefits of having treatment. The pain in my body subsided, and I had lots of energy. At first, I was nervous to use the chamber, but the owner takes her time and sits with you throughout your whole treatment. Thanks so much 🙏 I'm glad I found you.</p>
+            </div>
+            <div class="review-card">
+                <p class="review-author">Alia Is</p>
+                <p class="review-content">I've done about 4 sessions so far to help with post-surgery recovery and have seen improvements in my bruising and pain levels. I was looking for a calm relaxed environment and Shahina was great from the first phone call; really happy to provide information with no upselling so I felt really comfortable coming in and doing my treatments. Shahina explained everything so well, and the chamber itself is really relaxing. Great service and treatment!</p>
+            </div>
+            <div class="review-card">
+                <p class="review-author">Adnan Habib</p>
+                <p class="review-content">HBOT has transformed my recovery after intense workouts. I feel rejuvenated and ready to conquer the next challenge, not just physically but mentally too! It's truly a holistic well-being experience. My skin has never looked better! Thank you Shahina; you're the greatest!</p>
+            </div>
+            <div class="review-card">
+                <p class="review-author">Medelyn Serrano</p>
+                <p class="review-content">Oxyheal is the best hyperbaric and normobaric oxygen therapy provider for us. Our daughter has autism and other special needs. Trying anything we could to help my daughter, we have come across HBOT and NBOT. Luckily enough, we found a gem provider in the heart of Newham - Oxyheal. Shahina and family treat us well and understand our needs. Shahina is very knowledgeable about the service the business provides and also understands the needs of her clients. We have been with Oxyheal since mid-2021 and will still continue as long as my daughter needs it. Prices are reasonable, and booking appointments is not a problem at all. Will definitely recommend to those who are looking for an HBOT provider.</p>
+            </div>
+        </div>
+    </div>
+    <div class="arrow-container">
+        <button class="arrow" onclick="prevReview()">&#8249; Prev</button>
+        <button class="arrow" onclick="nextReview()">Next &#8250;</button>        
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="social-icons">
+        <a href="https://www.instagram.com/oxyheal/?hl=en" target="_blank"><img src="instagram_logo.png" alt="Instagram"></a>
+        <a href="https://www.facebook.com/oxyheal1/" target="_blank"><img src="facebook_logo.png" alt="Facebook"></a>
+        <a href="https://www.linkedin.com/company/oxyheal-ltd/about/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn"></a>
+    </div>
+    <p>&copy; 2023 Oxyheal. All rights reserved.</p>
+</footer>
+<!-- func to loop through reviews and loop back after final one -->
+<script>
+let currentReviewIndex = 0;
+const reviews = document.querySelectorAll('.review-card');
+const reviewSlider = document.querySelector('.review-slider');
+const totalReviews = reviews.length;
+
+function updateSliderPosition() {
+    const slideWidth = reviews[0].clientWidth;
+    const newTransformValue = -currentReviewIndex * slideWidth;
+    reviewSlider.style.transform = `translateX(${newTransformValue}px)`;
+}
+
+function nextReview() {
+    if (currentReviewIndex === totalReviews - 1) {
+        currentReviewIndex = 0;
+    } else {
+        currentReviewIndex += 1;
+    }
+    updateSliderPosition();
+}
+
+function prevReview() {
+    if (currentReviewIndex === 0) {
+        currentReviewIndex = totalReviews - 1;
+    } else {
+        currentReviewIndex -= 1;
+    }
+    updateSliderPosition();
+}
+
+showReview(currentReviewIndex);
+
+</script>
+<script src="script.js"></script>
+</body>
+</html>
